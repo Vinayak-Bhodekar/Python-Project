@@ -38,11 +38,27 @@ def choose_color(is_computer):
             print("Invalid Number. Please choose between 1 and 4.")
         except ValueError:
             print("Invalid input. Please enter a number.")
+
+def wild_card_condition(hand,choosed_color):
+    legal = []
+    for card in hand:
+        if card not in wild_cards:
+            split_card = card.split(maxsplit=1)
+            if len(split_card) == 2:
+                color, action = split_card
+                if color == choosed_color:
+                    legal.append(card)
+    return legal
+
 # function gives legal cards every time
 def get_legal_cards(hand, discard_pile_top, current_color):
     legal = []
     if discard_pile_top in wild_cards:
-        return hand
+        if wild_cards[0] == discard_pile_top:
+            return hand
+        if wild_cards[1] == discard_pile_top:
+            legals = wild_card_condition(hand,current_color)
+            return legals
     discard_color, discard_action = current_color, discard_pile_top.split(maxsplit=1)[1]
     for card in hand:
         if card in wild_cards:
@@ -138,6 +154,7 @@ def gameplay():
     player_turn = 1
     refer = 0
     while True:
+        print(computer)
         if player_turn == 1:
             interface(player, len(computer), discard_pile, current_color)
             legal = get_legal_cards(player, discard_pile[-1], current_color)
