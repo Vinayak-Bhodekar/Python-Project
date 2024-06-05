@@ -154,7 +154,6 @@ def gameplay():
     player_turn = 1
     refer = 0
     while True:
-        print(computer)
         if player_turn == 1:
             interface(player, len(computer), discard_pile, current_color)
             legal = get_legal_cards(player, discard_pile[-1], current_color)
